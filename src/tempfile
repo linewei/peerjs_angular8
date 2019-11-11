@@ -1,0 +1,7 @@
+    <!--
+    <ng-container [ngSwitch]="contentId"></ng-container>
+      <app-dashboard *ngSwitchCase="'dashboard'"></app-dashboard>
+      <app-form *ngSwitchCase="'form'"></app-form>
+      <p *ngSwitchDefault></p>
+    </ng-container>
+    -->

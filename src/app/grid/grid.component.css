@@ -1,0 +1,15 @@
+.mat-grid-tile {
+  background: lightblue;
+  margin-right: 8px;
+}
+
+.mat-grid-tile {
+  margin-right: 12px;
+}
+
+.button-row {
+  margin-top: 8px;
+}
+.button-row button {
+  margin-right: 8px;
+}
