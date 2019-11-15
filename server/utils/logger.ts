@@ -1,7 +1,7 @@
 const winston = require('winston');
 
 const logDir = __dirname + '/../../log/';
-const logger = winston.createLogger({
+const myLogger = winston.createLogger({
   level: 'info',
   format: winston.format.json(),
   transports: [
@@ -19,9 +19,9 @@ const logger = winston.createLogger({
 // `${info.level}: ${info.message} JSON.stringify({ ...rest }) `
 //
 if (process.env.NODE_ENV !== 'production') {
-  logger.add(new winston.transports.Console({
+  myLogger.add(new winston.transports.Console({
     format: winston.format.simple()
   }));
 }
 
-module.exports = logger;
+module.exports = myLogger;
