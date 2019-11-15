@@ -54,8 +54,8 @@ export class VideoComponent implements OnInit {
     });
 
     this.peer.on('error', (err) => {
-      console.error('An error occuers : ' , err.type);
-      alert('An error occuers : ' + err.type);
+      console.error('An error occurs : ' , err.type);
+      alert('An error occurs : ' + err.type);
     });
 
     this.peer.on('connection', (conn) => {
@@ -67,14 +67,14 @@ export class VideoComponent implements OnInit {
     this.peer.on('call', (call: Peer.MediaConnection) => {
       call.answer(this.localStream.stream);
       call.on('stream', (stream: MediaStream) => {
+        console.log('Get answer remote video successed! id: ', call.peer);
+        console.log('Open : ', call.open);
+
         const existStream = this.remoteStreamArray.find((item) => {
           if (item.id === call.peer) {
             return true;
           }
         });
-
-        console.log('Get answer remote video successed! id: ', call.peer);
-        console.log('Open : ', call.open);
 
         if (existStream) { return ; }
 

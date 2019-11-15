@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GridService } from '../service/grid.service';
+declare var Peer: any;
 
 @Component({
   selector: 'app-grid',

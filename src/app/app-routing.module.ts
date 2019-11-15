@@ -6,6 +6,7 @@ import { TableComponent } from './table/table.component';
 import { TreeComponent } from './tree/tree.component';
 import { DragDropComponent } from './drag-drop/drag-drop.component';
 import { GridComponent } from './grid/grid.component';
+import { VideoComponent } from './video/video.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path: 'tree', component: TreeComponent},
   {path: 'drap-drop', component: DragDropComponent},
   {path: 'grid', component: GridComponent},
+  {path: 'video', component: VideoComponent},
   {path: '', component: DashboardComponent},
 ];
 
