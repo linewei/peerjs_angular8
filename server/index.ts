@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const logger = require('./utils/logger');
 const peer = require('peer');
+const cors = require('cors');
 import { Candidate, Room, RoomFactory } from './room';
 const argv = require('yargs')
   .usage('Usage: $0 <Directory> [-p port]')
@@ -27,6 +28,7 @@ const port = argv.p ? argv.p : 9000;
 const app = express();
 app.use(morgan('dev'));
 app.use(express.static(staticPath));
+app.use(cors());
 
 const roomfactory = new RoomFactory();
 app.locals.roomfactory = roomfactory;
@@ -38,7 +40,9 @@ const server = app.listen(port, () => {
   );
 });
 
-// /joinroom/?room=XXXX&candi=xxxx
+/* /joinroom/?room=XXXX&candi=xxxx
+  return all of other candidatas.
+*/
 app.get('/joinroom', (req, res) => {
   const roomId = req.query.room;
   const candiId = req.query.candi;
@@ -75,23 +79,22 @@ app.get('/leaveroom', (req, res) => {
       res.send(`'${candiId}' leave success.`);
       return;
     }
+  } else {
+    errString = `'${roomId}' do not exist!`;
   }
 
+
   console.log(errString);
-  res.status(404).send(errString);
+  res.send(errString);
 });
 
 const peerserver = peer.ExpressPeerServer(server, {debug: true});
 app.use('/peerjs', peerserver);
 
-/*
 peerserver.on('connection', (client) => {
-  logger.info('client connect. client: ', JSON.stringify(client));
+  logger.info('client connect. client: ');
 });
 
 peerserver.on('disconnect', (client) => {
-  logger.info('client disconnect. client: ', JSON.stringify(client));
+  logger.info('client disconnect. client: ');
 });
-*/
-
-// app.get('/', function(req, res, next) { res.send('Hello world!'); });
