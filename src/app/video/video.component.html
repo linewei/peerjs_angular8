@@ -1,16 +1,10 @@
 <h1> Local Video</h1>
-<p> {{ localStream.id }}</p>
-<video [srcObject]="localStream.stream" autoplay></video>
+<video [srcObject]="vs.getLocalStreamStream()" autoplay></video>
 
 <div>
   <h1> Remote Video</h1>
-  <ng-container *ngFor="let remoteStream of remoteStreamArray">
-    <p> {{ remoteStream.id }}</p>
+  <ng-container *ngFor="let remoteStream of vs.getRemoteStreamArray(); trackBy: trackByStream">
     <video [srcObject]="remoteStream.stream" autoplay></video>
   </ng-container>
-</div>
-<div>
-  <input  type="text" [(ngModel)]="inputValue">
-  <button (click)="connectRemote()"> Connect Remote </button>
 </div>
 
