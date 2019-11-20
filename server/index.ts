@@ -46,8 +46,8 @@ const server = app.listen(port, () => {
 app.get('/joinroom', (req, res) => {
   const roomId = req.query.room;
   const candiId = req.query.candi;
-  const room = roomfactory.addRoomByid(roomId);
-  const candi = room.joinRoom(candiId);
+  const room: Room = roomfactory.addRoomByid(roomId);
+  const candi: Candidate = room.joinRoom(candiId);
 
   const otherCandis = room.getOtherCandi(candiId);
   console.log(`${roomId} / ${candiId} other ${otherCandis.length} candidata.` + JSON.stringify(otherCandis));
@@ -61,14 +61,14 @@ app.get('/leaveroom', (req, res) => {
   const fromId = req.query.from;
   let errString = '';
 
-  const room = roomfactory.findRoom(roomId);
+  const room: Room|undefined = roomfactory.findRoom(roomId);
   if (room) {
-    const candi = room.getCandidate(candiId);
+    const candi: Candidate|undefined = room.getCandidate(candiId);
     if ( !candi ) {
       errString = `Candidate '${candiId}' do not exist in room '${roomId}'.`;
     }
 
-    const fromCandi = room.getCandidate(fromId);
+    const fromCandi: Candidate|undefined = room.getCandidate(fromId);
     if ( !fromCandi ) {
       errString = `From andidate '${fromId}' do not exist in room '${roomId}'.`;
     }

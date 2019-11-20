@@ -1,6 +1,5 @@
 <h1> Local Video</h1>
 <video [srcObject]="vs.getLocalStreamStream()" autoplay></video>
-
 <div>
   <h1> Remote Video</h1>
   <ng-container *ngFor="let remoteStream of vs.getRemoteStreamArray(); trackBy: trackByStream">
