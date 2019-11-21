@@ -91,10 +91,6 @@ export class VideoService {
         console.log(`Peer ${streamId} closed the connection!`);
         this.removeRemoteStream(streamId);
         this.ar.tick();
-
-        this.rs.leaveRoom(streamId).subscribe((res) => {
-          console.log(`Tell server remove ${streamId}. server return: ${res}.`);
-        });
       });
 
       call.on('error', (err) => {
@@ -127,10 +123,6 @@ export class VideoService {
       console.log(`Peer ${streamId} closed the connection!`);
       this.removeRemoteStream(streamId);
       this.ar.tick();
-
-      this.rs.leaveRoom(streamId).subscribe((res) => {
-        console.log(`Tell server remove ${streamId}. server return: ${res}.`);
-      });
     });
 
     call.on('error', err => {

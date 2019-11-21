@@ -1,3 +1,5 @@
+const logger = require('./utils/logger');
+
 export class Candidate {
   id: string;
   refIds: string[] = [];
@@ -67,6 +69,8 @@ export class Room {
 
 export class RoomFactory {
   rooms: Room[] = [];
+  crMap: Map<string, Room> = new Map();
+
   constructor() {
   }
 
@@ -80,17 +84,33 @@ export class RoomFactory {
     });
   }
 
-  addRoomByid(roomId: string) {
-    const room = this.findRoom(roomId);
+  addRoomByid(roomId: string, candiId: string) {
+    let room = this.findRoom(roomId);
 
-    if (room) {
-      return room;
+    if (!room) {
+      room = new Room(roomId);
+      this.addRoom(room);
     }
 
-    const ro = new Room(roomId);
-    this.rooms.push(ro);
+    room.joinRoom(candiId);
+    this.crMap.set(candiId, room);
+    return room;
+  }
 
-    return ro;
+  leaveRoomByid(candiId: string) {
+    const room = this.crMap.get(candiId);
+    if (room) {
+      room.leaveRoom(candiId);
+
+      logger.info(`${candiId} leave room ${room.id}`);
+
+      this.crMap.delete(candiId);
+      if (!room.candidates.length) {
+        this.removeRoom(room);
+        logger.info(`room ${room.id} has 0 candidate, remove it from factory.`);
+      }
+
+    }
   }
 
   findRoom(roomId: string) {

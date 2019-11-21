@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StreamInterface, VideoService } from './video.service';
+import { ActivatedRoute } from '@angular/router';
+import { RoomService } from './room.service';
 
 @Component({
   selector: 'app-video',
@@ -9,6 +11,8 @@ import { StreamInterface, VideoService } from './video.service';
 export class VideoComponent implements OnInit {
   constructor(
     public vs: VideoService,
+    private route: ActivatedRoute,
+    private rs: RoomService
     ) {}
 
   ngOnInit() {
@@ -20,6 +24,9 @@ export class VideoComponent implements OnInit {
         .catch(err => {
           console.log('Failed to get stream', err);
         });
+
+    this.rs.roomId = this.route.snapshot.paramMap.get('roomid');
+    console.log(`Room id: ${this.rs.roomId}`);
   }
 
   trackByStream(index: number, item: StreamInterface) {
