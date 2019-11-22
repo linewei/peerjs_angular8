@@ -32,7 +32,8 @@ export class RoomService {
     };
 
     const hostname = window.location.hostname;
-    const reqUrl = `http://${hostname}:9000/joinroom/?room=${roomId}&candi=${candi}`;
+    const protocol = window.location.protocol;
+    const reqUrl = `/joinroom/?room=${roomId}&candi=${candi}`;
     return this.http.get<Candidate[]>(reqUrl, httpOptions);
   }
 

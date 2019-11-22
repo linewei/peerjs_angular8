@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const logger = require('./utils/logger');
 const peer = require('./peerserver/src');
 const cors = require('cors');
+const fs = require('fs');
 import { Candidate, Room, RoomFactory } from './room';
 const argv = require('yargs')
   .usage('Usage: $0 <Directory>')
@@ -13,12 +14,11 @@ const argv = require('yargs')
     demand: false
   })
   .version(false)
-  .example('ts-node $0 -p 8080')
+  .example('ts-node $0')
   .argv;
 
 argv._ = String(argv._).trim();
 const staticPath = argv._ ? argv._ : __dirname + '/../dist';
-const port = 9000;
 
 const app = express();
 app.use(morgan('dev'));
@@ -28,16 +28,19 @@ app.use(cors());
 const roomfactory = new RoomFactory();
 app.locals.roomfactory = roomfactory;
 
+const options = {
+	pfx: fs.readFileSync('./ssl/csslcloud.net.pfx'),
+	passphrase: 'dreamwindows'
+};
 
-const server = app.listen(port, () => {
-  console.log(
-    `Listening at ${port} for serve websocket.`
-  );
+const httpWeb = require('https');
+httpWeb.createServer(options, app).listen(443, () => {
+  console.log('Listening at 443 for serve web page.');
 });
 
-const http80 = require('http');
-http80.createServer(app).listen(80, () => {
-  console.log('Listening at 80 for serve web page.');
+const httpSocket = require('https');
+const server = httpSocket.createServer(options, app).listen(9000, () => {
+  console.log(`Listening at 9000 for serve websocket.`);
 });
 
 /* /joinroom/?room=XXXX&candi=xxxx

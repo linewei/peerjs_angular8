@@ -27,7 +27,7 @@ export class VideoService {
         host: '/',
         port: 9000,
         path: '/peerjs',
-        secure: false,
+        secure: true,
         debug: 2
       };
 
