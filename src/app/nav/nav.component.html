@@ -3,9 +3,9 @@
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Menu</mat-toolbar>
+    <mat-toolbar>视频</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item [routerLink]="['/video', '888888']"> Video</a>
+      <app-video></app-video>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -20,7 +20,6 @@
       </button>
       <span>mat</span>
     </mat-toolbar>
-    <router-outlet></router-outlet>
 
     <div class='footer'></div>
   </mat-sidenav-content>

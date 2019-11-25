@@ -1,10 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ConfigService } from '../config/config.service';
 
 export interface Candidate {
   id: string;
   refIds: string[];
+}
+
+export enum RULER {
+  TEACHER = 0,
+  STUDENT,
+  ASSISTANT,
+  AUDIENCE,
+  UNKNOWN
 }
 
 @Injectable({
@@ -14,8 +22,9 @@ export class RoomService {
   public roomId = '';
   localCandi = '';
   peerCandidatas: Candidate[] = [];
+  ruler: RULER = RULER.UNKNOWN;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private http: HttpClient, private cf: ConfigService) {
     this.localCandi = this.getLocalCandiId();
   }
 
@@ -31,9 +40,12 @@ export class RoomService {
       })
     };
 
+    const config = this.cf.peerConfig;
     const hostname = window.location.hostname;
-    const protocol = window.location.protocol;
-    const reqUrl = `/joinroom/?room=${roomId}&candi=${candi}`;
+    const protocol = this.cf.peerConfig.secure === true ? 'https' : 'http';
+    console.log(`hostname: ${hostname} , protocol: ${protocol}`);
+
+    const reqUrl = `https://${hostname}:${config.port}/joinroom/?room=${roomId}&candi=${candi}`;
     return this.http.get<Candidate[]>(reqUrl, httpOptions);
   }
 

@@ -1,5 +1,6 @@
 import { Injectable, ChangeDetectorRef, ApplicationRef } from '@angular/core';
 import { RoomService } from './room.service';
+import { ConfigService } from '../config/config.service';
 
 export class StreamInterface {
   id: string;
@@ -19,17 +20,14 @@ export class VideoService {
   localStream: StreamInterface = null;
   remoteStreamArray: StreamInterface[] = [];
 
-  constructor(private rs: RoomService, private ar: ApplicationRef) {
-  }
+  constructor(
+    private rs: RoomService,
+    private ar: ApplicationRef,
+    private cf: ConfigService
+    ) {}
 
   setupPeer(localStream: MediaStream) {
-    const peerOptions: Peer.PeerJSOption = {
-        host: '/',
-        port: 9000,
-        path: '/peerjs',
-        secure: true,
-        debug: 2
-      };
+    const peerOptions: Peer.PeerJSOption = this.cf.peerConfig;
 
     const localCandi = this.rs.getLocalCandiId();
     let peer: Peer|null = null;
@@ -54,6 +52,7 @@ export class VideoService {
           this.connectRemote(candi.id);
         });
       });
+
     });
 
     peer.on('disconnected', () => {

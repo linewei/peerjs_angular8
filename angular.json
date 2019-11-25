@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "mat": {
+    "letslesson": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -68,18 +68,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "mat:build"
+            "browserTarget": "letslesson:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "mat:build:production"
+              "browserTarget": "letslesson:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "mat:build"
+            "browserTarget": "letslesson:build"
           }
         },
         "test": {
@@ -117,16 +117,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "mat:serve"
+            "devServerTarget": "letslesson:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "mat:serve:production"
+              "devServerTarget": "letslesson:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "mat"
+  "defaultProject": "letslesson"
 }
