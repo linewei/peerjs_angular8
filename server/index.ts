@@ -32,7 +32,7 @@ app.locals.roomfactory = roomfactory;
 
 const options = {
   pfx: fs.readFileSync(path.resolve(__dirname + '/ssl/csslcloud.net.pfx')),
-  passphrase: 'dreamwindows'
+  passphrase: '****'
 };
 
 const httpWeb = require('https');
