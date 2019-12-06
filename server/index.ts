@@ -31,7 +31,7 @@ const roomfactory = new RoomFactory();
 app.locals.roomfactory = roomfactory;
 
 const options = {
-  pfx: fs.readFileSync(path.resolve(__dirname + '/ssl/csslcloud.net.pfx')),
+  pfx: fs.readFileSync(path.resolve(__dirname + 'your cert file')),
   passphrase: '****'
 };
 
